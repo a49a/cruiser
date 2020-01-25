@@ -11,11 +11,14 @@ public class POJO {
             this.name = name;
             this.age = age;
         }
+
+        public String toString() {
+            return this.name + " age: " + this.age;
+        }
     }
 
     public static void main( String[] args ) {
         Person ap = new Person();
-        System.out.println(ap.name);
-        System.out.println(ap.age);
+        System.out.println(ap);
     }
 }
