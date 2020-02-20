@@ -1,3 +1,3 @@
 # cruiser
 Java lang training
-Java 语言联系例子
+Java 语言练习例子
