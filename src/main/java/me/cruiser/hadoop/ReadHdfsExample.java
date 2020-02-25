@@ -16,16 +16,17 @@ public class ReadHdfsExample {
         Path path = new Path(fileName);
         Configuration conf = new Configuration();
         FileSystem fs;
-        FSDataInputStream inputStream;
+        FSDataInputStream inputStream = null;
         BufferedReader reader = null;
         try {
             fs = FileSystem.get(conf);
-            // 向NN:9000 getFileInfo 获取 HdfsFileStatus
-            // 再getBlockLocations
+            // 向NN:9000 getFileInfo() 获取 HdfsFileStatus。
+            // 再执行getBlockLocations()，默认返回10个Block，NN根据距离返回的时候已经排好序。
             inputStream = fs.open(path);
             reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             // 最近的DN读，完整性校验失败，换一个DN继续。
+            //
             while ((line = reader.readLine()) != null) {
                 System.out.println("Record: " + line);
             }
@@ -33,6 +34,7 @@ public class ReadHdfsExample {
             e.printStackTrace();
         } finally {
             try {
+                inputStream.close();
                 if (reader != null) {
                     reader.close();
                 }
